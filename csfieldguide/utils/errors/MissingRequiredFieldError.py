@@ -27,13 +27,12 @@ class MissingRequiredFieldError(Error):
         Returns:
             Error message for missing required field.
         """
-        fields = ""
-        for field in self.required_fields:
-            fields += "  - {field}\n".format(field=str(field))
-        if len(self.required_fields) > 1:
-            plural = "s"
-        else:
-            plural = ""
+        fields = "".join(
+            "  - {field}\n".format(field=str(field))
+            for field in self.required_fields
+        )
+
+        plural = "s" if len(self.required_fields) > 1 else ""
         missing_field_message = ERROR_MESSAGE_TEMPLATE.format(
             model=self.model,
             fields=fields,

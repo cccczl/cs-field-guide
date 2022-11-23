@@ -30,8 +30,9 @@ class ChapterSectionsLoaderTest(BaseTestWithDB):
             chapter,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         chapter_section_loader.load()
         self.assertQuerysetEqual(
             ChapterSection.objects.all(),
@@ -47,8 +48,9 @@ class ChapterSectionsLoaderTest(BaseTestWithDB):
             chapter,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         chapter_section_loader.load()
         self.assertQuerysetEqual(
             ChapterSection.objects.all(),
@@ -67,8 +69,9 @@ class ChapterSectionsLoaderTest(BaseTestWithDB):
             chapter,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         self.assertRaises(
             MissingRequiredFieldError,
             chapter_section_loader.load
@@ -83,8 +86,9 @@ class ChapterSectionsLoaderTest(BaseTestWithDB):
             chapter,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         self.assertRaises(
             MissingRequiredFieldError,
             chapter_section_loader.load
@@ -99,8 +103,9 @@ class ChapterSectionsLoaderTest(BaseTestWithDB):
             chapter,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         self.assertRaises(
             InvalidYAMLValueError,
             chapter_section_loader.load
@@ -115,8 +120,9 @@ class ChapterSectionsLoaderTest(BaseTestWithDB):
             chapter,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         self.assertRaises(
             ValidationError,
             chapter_section_loader.load
@@ -131,8 +137,9 @@ class ChapterSectionsLoaderTest(BaseTestWithDB):
             chapter,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         self.assertRaises(
             NoHeadingFoundInMarkdownFileError,
             chapter_section_loader.load
@@ -150,8 +157,9 @@ class ChapterSectionsLoaderTest(BaseTestWithDB):
             chapter,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         chapter_section_loader.load()
         self.assertQuerysetEqual(
             ChapterSection.objects.all(),
@@ -175,8 +183,9 @@ class ChapterSectionsLoaderTest(BaseTestWithDB):
             chapter,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         self.assertRaises(
             KeyNotFoundError,
             chapter_section_loader.load
@@ -191,8 +200,9 @@ class ChapterSectionsLoaderTest(BaseTestWithDB):
             chapter,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         self.assertRaises(
             InvalidYAMLValueError,
             chapter_section_loader.load

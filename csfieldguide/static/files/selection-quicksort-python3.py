@@ -37,7 +37,7 @@ def selection_sort_count(sample_list):
     Returns the number of comparisons required.
     """
     key_comparisons_made = 0
-    for i in range(0, len(sample_list) - 1):
+    for i in range(len(sample_list) - 1):
         min_position_so_far = i
         for j in range(i + 1, len(sample_list)):
             key_comparisons_made += 1
@@ -62,9 +62,9 @@ def quick_sort_count(sample_list):
 
 def quicksort_partial_list(sample_list, first, last):
     """Recursively quicksort sample_list between first and last inclusive."""
-    key_comparisons_made = 0
     if first < last:
         partition_point = partition(sample_list, first, last)
+        key_comparisons_made = 0
         # partition compares one less than items in list
         key_comparisons_made += (last - first)
         left_key_comps = quicksort_partial_list(
@@ -153,7 +153,7 @@ def test_quick_sort(n, show_list):
 # For thorough results, experiments should be run for a larger range of values
 # and experiments should be repeated multiple times
 for number_of_keys in NUMBER_OF_KEYS:
-    for repeat_of_experiment in range(NUMBER_OF_REPEATED_EXPERIMENTS):
+    for _ in range(NUMBER_OF_REPEATED_EXPERIMENTS):
         test_selection_sort(number_of_keys, False)
-    for repeat_of_experiment in range(NUMBER_OF_REPEATED_EXPERIMENTS):
+    for _ in range(NUMBER_OF_REPEATED_EXPERIMENTS):
         test_quick_sort(number_of_keys, False)

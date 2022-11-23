@@ -16,11 +16,12 @@ class InteractivesTestDataGenerator:
             Interactive object.
         """
         interactive = Interactive(
-            slug="interactive-{}".format(number),
-            name="Interactive {}".format(number),
-            template="interactive-{}.html".format(number),
+            slug=f"interactive-{number}",
+            name=f"Interactive {number}",
+            template=f"interactive-{number}.html",
             languages=["en"],
         )
+
         interactive.save()
         return interactive
 
@@ -34,12 +35,13 @@ class InteractivesTestDataGenerator:
             Interactive object.
         """
         interactive = Interactive(
-            slug="interactive-{}".format(number),
-            name="Interactive {}".format(number),
-            template="interactive-{}.html".format(number),
+            slug=f"interactive-{number}",
+            name=f"Interactive {number}",
+            template=f"interactive-{number}.html",
             languages=["en"],
             use_large_thumbnail=True,
         )
+
         interactive.save()
         return interactive
 
@@ -53,11 +55,12 @@ class InteractivesTestDataGenerator:
             Interactive object.
         """
         uninteractive = Interactive(
-            slug="interactive-{}".format(number),
-            name="Interactive {}".format(number),
-            template="interactive-{}.html".format(number),
+            slug=f"interactive-{number}",
+            name=f"Interactive {number}",
+            template=f"interactive-{number}.html",
             languages=["en"],
             is_interactive=False,
         )
+
         uninteractive.save()
         return uninteractive

@@ -42,7 +42,7 @@ class UpdatedModelFilterOptionsTest(BaseTest):
             },
         ]
         self.assertListEqual(result, expected)
-        for i in range(0, len(expected)):
+        for i in range(len(expected)):
             self.assertDictEqual(result[i], expected[i])
 
     def test_updated_model_filter_options_multiple_selected(self):
@@ -83,7 +83,7 @@ class UpdatedModelFilterOptionsTest(BaseTest):
             },
         ]
         self.assertListEqual(result, expected)
-        for i in range(0, len(expected)):
+        for i in range(len(expected)):
             self.assertDictEqual(result[i], expected[i])
 
     def test_updated_model_filter_options_none_selected(self):
@@ -124,5 +124,5 @@ class UpdatedModelFilterOptionsTest(BaseTest):
             },
         ]
         self.assertListEqual(result, expected)
-        for i in range(0, len(expected)):
+        for i in range(len(expected)):
             self.assertDictEqual(result[i], expected[i])

@@ -27,7 +27,7 @@ class TranslateURLTest(BaseTest):
 
     @override_settings(LANGUAGES=AVAILABLE_LANGUAGES_EN_DE)
     def test_translate_url(self):
-        localised_path = "/en" + VALID_PATH
+        localised_path = f"/en{VALID_PATH}"
         request = HttpRequest()
         request.path = localised_path
         context = {
@@ -35,15 +35,12 @@ class TranslateURLTest(BaseTest):
         }
         tag = "{% load translate_url %}{% translate_url 'de' %}"
         rendered = self.render_template(tag, context)
-        self.assertEqual(
-            "/de" + VALID_PATH,
-            rendered
-        )
+        self.assertEqual(f"/de{VALID_PATH}", rendered)
 
     @override_settings(LANGUAGES=AVAILABLE_LANGUAGES_EN_DE)
     def test_translate_url_invalid_url(self):
         path = INVALID_PATH
-        localised_path = "/en" + path
+        localised_path = f"/en{path}"
         request = HttpRequest()
         request.path = localised_path
         context = {
@@ -57,7 +54,7 @@ class TranslateURLTest(BaseTest):
         )
 
     def test_translate_url_missing_target_language(self):
-        localised_path = "/en" + VALID_PATH
+        localised_path = f"/en{VALID_PATH}"
         request = HttpRequest()
         request.path = localised_path
         context = {
@@ -69,7 +66,7 @@ class TranslateURLTest(BaseTest):
 
     @override_settings(LANGUAGES=AVAILABLE_LANGUAGES_EN)
     def test_translate_url_invalid_language(self):
-        localised_path = "/en" + VALID_PATH
+        localised_path = f"/en{VALID_PATH}"
         request = HttpRequest()
         request.path = localised_path
         context = {

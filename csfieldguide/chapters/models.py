@@ -213,7 +213,7 @@ class ChapterSectionHeading(models.Model):
                 "chapter_section_slug": self.chapter_section.slug
             }
         )
-        return "{}#{}".format(url, self.slug)
+        return f"{url}#{self.slug}"
 
     class Meta:
         """Set consistent ordering of chapter section headings."""

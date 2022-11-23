@@ -30,15 +30,13 @@ class CheckRequiredFilesTest(BaseTestWithDB):
         )
 
     def test_check_interactives_without_chapter(self):
-        interactives = []
-        interactives.append(self.interactives_test_data.create_interactive(1).slug)
+        interactives = [self.interactives_test_data.create_interactive(1).slug]
         interactives.append(self.interactives_test_data.create_interactive(2).slug)
         interactives.append(self.interactives_test_data.create_interactive(3).slug)
         check_required_files.check_interactives(interactives, "file path")
 
     def test_check_interactives_with_chapter(self):
-        interactives = []
-        interactives.append(self.interactives_test_data.create_interactive(1).slug)
+        interactives = [self.interactives_test_data.create_interactive(1).slug]
         interactives.append(self.interactives_test_data.create_interactive(2).slug)
         interactives.append(self.interactives_test_data.create_interactive(3).slug)
         chapter = self.chapters_test_data.create_chapter(1)

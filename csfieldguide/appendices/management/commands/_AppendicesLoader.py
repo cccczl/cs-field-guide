@@ -48,7 +48,8 @@ class AppendicesLoader(TranslatableModelLoader):
         except TemplateDoesNotExist:
             raise InvalidYAMLValueError(
                 self.structure_file_path,
-                "template ({})".format(template),
-                "A valid template file path"
+                f"template ({template})",
+                "A valid template file path",
             )
+
         return template

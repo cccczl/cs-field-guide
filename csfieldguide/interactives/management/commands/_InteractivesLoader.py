@@ -26,14 +26,14 @@ class InteractivesLoader(TranslatableModelLoader):
         )
 
         for interactive_slug, interactive_data in interactives_structure.items():
-            translations = interactive_translations.get(interactive_slug, dict())
+            translations = interactive_translations.get(interactive_slug, {})
 
-            languages = interactive_data.get("languages", dict())
+            languages = interactive_data.get("languages", {})
             for language_code, template_path in languages.items():
                 if language_code not in valid_language_codes:
                     error_text = "One of the following values:\n"
                     for code in valid_language_codes:
-                        error_text += "- {}\n".format(code)
+                        error_text += f"- {code}\n"
                     raise InvalidYAMLValueError(
                         self.structure_file_path,
                         "interactive's 'language' value",
@@ -41,7 +41,7 @@ class InteractivesLoader(TranslatableModelLoader):
                     )
                 else:
                     if not translations.get(language_code):
-                        translations[language_code] = dict()
+                        translations[language_code] = {}
                     translations[language_code]["template"] = template_path
 
             is_interactive = interactive_data.get("is_interactive")
@@ -62,8 +62,5 @@ class InteractivesLoader(TranslatableModelLoader):
             )
             interactive.save()
 
-            if created:
-                term = 'Created'
-            else:
-                term = 'Updated'
+            term = 'Created' if created else 'Updated'
             self.log(f'{term} interactive: {interactive.__str__()}')

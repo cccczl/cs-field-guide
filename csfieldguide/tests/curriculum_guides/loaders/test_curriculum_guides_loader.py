@@ -25,16 +25,17 @@ class CurriculumGuidesLoaderTest(BaseTestWithDB):
             curriculum_guide_number=1,
             content_path=test_slug,
             base_path=self.base_path,
-            structure_filename="{}.yaml".format(test_slug)
+            structure_filename=f"{test_slug}.yaml",
         )
+
         curriculum_guide_loader.load()
         self.assertQuerysetEqual(
             CurriculumGuide.objects.all(),
             ["<CurriculumGuide: Curriculum Guide 1>"]
         )
         self.assertSetEqual(
-            set(["en"]),
-            set(CurriculumGuide.objects.get(slug="curriculum_guide-1").languages)
+            {"en"},
+            set(CurriculumGuide.objects.get(slug="curriculum_guide-1").languages),
         )
 
     def test_curriculum_guides_curriculum_guide_loader_introduction_missing_heading(self):
@@ -45,8 +46,9 @@ class CurriculumGuidesLoaderTest(BaseTestWithDB):
             curriculum_guide_number=1,
             content_path=test_slug,
             base_path=self.base_path,
-            structure_filename="{}.yaml".format(test_slug)
+            structure_filename=f"{test_slug}.yaml",
         )
+
         self.assertRaises(
             NoHeadingFoundInMarkdownFileError,
             curriculum_guide_loader.load
@@ -60,8 +62,9 @@ class CurriculumGuidesLoaderTest(BaseTestWithDB):
             curriculum_guide_number=1,
             content_path=test_slug,
             base_path=self.base_path,
-            structure_filename="{}.yaml".format(test_slug)
+            structure_filename=f"{test_slug}.yaml",
         )
+
         self.assertRaises(
             EmptyMarkdownFileError,
             curriculum_guide_loader.load
@@ -75,8 +78,9 @@ class CurriculumGuidesLoaderTest(BaseTestWithDB):
             curriculum_guide_number=1,
             content_path=test_slug,
             base_path=self.base_path,
-            structure_filename="{}.yaml".format(test_slug)
+            structure_filename=f"{test_slug}.yaml",
         )
+
         self.assertRaises(
             MissingRequiredFieldError,
             curriculum_guide_loader.load

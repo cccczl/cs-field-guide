@@ -55,18 +55,18 @@ def index_instance(instance, item_number):
         # Get index contents
         contents = get_instance_index_contents(instance)
 
-        search_vector_list = []
-        for weight, text in contents.items():
-            search_vector_list.append(
-                SearchVector(Value(text), weight=weight)
-            )
+        search_vector_list = [
+            SearchVector(Value(text), weight=weight)
+            for weight, text in contents.items()
+        ]
+
         search_vectors = search_vector_list[0]
         for search_vector in search_vector_list[1:]:
             search_vectors += search_vector
 
         # Render result preview
         context = {'result': instance}
-        template = join(SEARCH_RESULT_TEMPLATE_DIRECTORY, object_type + '.html')
+        template = join(SEARCH_RESULT_TEMPLATE_DIRECTORY, f'{object_type}.html')
         result_preview = render_to_string(template, context)
 
         SearchItem.objects.create(

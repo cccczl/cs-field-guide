@@ -65,23 +65,23 @@ class TranslatableModelLoaderTest(SimpleTestCase):
         translations = loader.get_yaml_translations(yaml_file)
 
         self.assertIsInstance(translations, dict)
-        self.assertSetEqual(set(["model1", "model2"]), set(translations.keys()))
+        self.assertSetEqual({"model1", "model2"}, set(translations.keys()))
 
         model1_translations = translations["model1"]
         self.assertIsInstance(model1_translations, dict)
-        self.assertSetEqual(set(["en"]), set(model1_translations.keys()))
+        self.assertSetEqual({"en"}, set(model1_translations.keys()))
         model1_english = model1_translations["en"]
         self.assertIsInstance(model1_english, dict)
-        self.assertSetEqual(set(["field1", "field2"]), set(model1_english.keys()))
+        self.assertSetEqual({"field1", "field2"}, set(model1_english.keys()))
         self.assertEqual("value 1-1", model1_english["field1"])
         self.assertEqual("value 1-2", model1_english["field2"])
 
         model2_translations = translations["model2"]
         self.assertIsInstance(model2_translations, dict)
-        self.assertSetEqual(set(["en"]), set(model2_translations.keys()))
+        self.assertSetEqual({"en"}, set(model2_translations.keys()))
         model2_english = model2_translations["en"]
         self.assertIsInstance(model2_english, dict)
-        self.assertSetEqual(set(["field1", "field2"]), set(model2_english.keys()))
+        self.assertSetEqual({"field1", "field2"}, set(model2_english.keys()))
         self.assertEqual("value 2-1", model2_english["field1"])
         self.assertEqual("value 2-2", model2_english["field2"])
 
@@ -118,7 +118,7 @@ class TranslatableModelLoaderTest(SimpleTestCase):
             field_map={"field1": "new_field1"}
         )
         model1 = translations["model1"]["en"]
-        self.assertSetEqual(set(["new_field1", "field2"]), set(model1.keys()))
+        self.assertSetEqual({"new_field1", "field2"}, set(model1.keys()))
         self.assertEqual("value 1-1", model1["new_field1"])
 
     def test_get_yaml_translations_translated(self):
@@ -127,21 +127,21 @@ class TranslatableModelLoaderTest(SimpleTestCase):
         translations = loader.get_yaml_translations(yaml_file)
 
         self.assertIsInstance(translations, dict)
-        self.assertSetEqual(set(["model1", "model2"]), set(translations.keys()))
+        self.assertSetEqual({"model1", "model2"}, set(translations.keys()))
 
         model1_translations = translations["model1"]
         self.assertIsInstance(model1_translations, dict)
-        self.assertSetEqual(set(["en", "de"]), set(model1_translations.keys()))
+        self.assertSetEqual({"en", "de"}, set(model1_translations.keys()))
 
         model1_english = model1_translations["en"]
         self.assertIsInstance(model1_english, dict)
-        self.assertSetEqual(set(["field1", "field2"]), set(model1_english.keys()))
+        self.assertSetEqual({"field1", "field2"}, set(model1_english.keys()))
         self.assertEqual("en value 1-1", model1_english["field1"])
         self.assertEqual("en value 1-2", model1_english["field2"])
 
         model1_german = model1_translations["de"]
         self.assertIsInstance(model1_german, dict)
-        self.assertSetEqual(set(["field1", "field2"]), set(model1_german.keys()))
+        self.assertSetEqual({"field1", "field2"}, set(model1_german.keys()))
         self.assertEqual("de value 1-1", model1_german["field1"])
         self.assertEqual("de value 1-2", model1_german["field2"])
 
@@ -151,8 +151,11 @@ class TranslatableModelLoaderTest(SimpleTestCase):
 
         # required fields only apply to default language (en) so no error should be raised
         translations = loader.get_yaml_translations(yaml_file, required_fields=["field1"])
-        self.assertSetEqual(set(["field1", "field2"]), set(translations["model2"]["en"].keys()))
-        self.assertSetEqual(set(["field2"]), set(translations["model2"]["de"].keys()))
+        self.assertSetEqual(
+            {"field1", "field2"}, set(translations["model2"]["en"].keys())
+        )
+
+        self.assertSetEqual({"field2"}, set(translations["model2"]["de"].keys()))
 
     def test_get_yaml_translations_translated_missing_reqd_slug(self):
         yaml_file = "translationmissingreqdslug.yaml"
@@ -160,14 +163,14 @@ class TranslatableModelLoaderTest(SimpleTestCase):
 
         # required slugs only apply to default language (en) so no error should be raised
         translations = loader.get_yaml_translations(yaml_file, required_slugs=["model1", "model2"])
-        self.assertSetEqual(set(["en", "de"]), set(translations["model1"].keys()))
-        self.assertSetEqual(set(["en"]), set(translations["model2"].keys()))
+        self.assertSetEqual({"en", "de"}, set(translations["model1"].keys()))
+        self.assertSetEqual({"en"}, set(translations["model2"].keys()))
 
     def test_get_markdown_translations_english(self):
         filename = "basic.md"
         loader = TranslatableModelLoader(base_path=self.base_path)
         translations = loader.get_markdown_translations(filename)
-        self.assertSetEqual(set(["en"]), set(translations.keys()))
+        self.assertSetEqual({"en"}, set(translations.keys()))
         self.assertIn("Basic Content", translations["en"].html_string)
         self.assertIn("Heading", translations["en"].title)
 
@@ -187,7 +190,7 @@ class TranslatableModelLoaderTest(SimpleTestCase):
         filename = "translation.md"
         loader = TranslatableModelLoader(base_path=self.base_path)
         translations = loader.get_markdown_translations(filename)
-        self.assertSetEqual(set(["en", "de"]), set(translations.keys()))
+        self.assertSetEqual({"en", "de"}, set(translations.keys()))
 
         en = translations["en"]
         self.assertIn("English Content", en.html_string)
@@ -224,7 +227,7 @@ class TranslatableModelLoaderTest(SimpleTestCase):
             model.fallback1 = "german value 1"
             model.nofallback1 = "german value 2"
         TranslatableModelLoader.mark_translation_availability(model, required_fields=["fallback1", "nofallback1"])
-        self.assertSetEqual(set(["en", "de"]), set(model.languages))
+        self.assertSetEqual({"en", "de"}, set(model.languages))
 
     def test_mark_translation_availability_required_fallback_field_missing(self):
         model = MockTranslatableModel()
@@ -234,7 +237,7 @@ class TranslatableModelLoaderTest(SimpleTestCase):
             # Don't populate the field "fallback1" which has fallback enabled
             model.nofallback1 = "german value 2"
         TranslatableModelLoader.mark_translation_availability(model, required_fields=["fallback1", "nofallback1"])
-        self.assertSetEqual(set(["en"]), set(model.languages))
+        self.assertSetEqual({"en"}, set(model.languages))
 
     def test_mark_translation_availability_required_no_fallback_field_missing(self):
         model = MockTranslatableModel()
@@ -244,7 +247,7 @@ class TranslatableModelLoaderTest(SimpleTestCase):
             # Don't populate the field "nofallback1" which does not have fallback enabled
             model.fallback1 = "german value 1"
         TranslatableModelLoader.mark_translation_availability(model, required_fields=["fallback1", "nofallback1"])
-        self.assertSetEqual(set(["en"]), set(model.languages))
+        self.assertSetEqual({"en"}, set(model.languages))
 
     def test_mark_translation_availability_required_fields_not_given(self):
         model = MockTranslatableModel()

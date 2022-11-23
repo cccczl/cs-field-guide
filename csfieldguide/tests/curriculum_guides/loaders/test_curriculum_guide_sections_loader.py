@@ -27,8 +27,9 @@ class CurriculumGuideSectionsLoaderTest(BaseTestWithDB):
             curriculum_guide,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         curriculum_guide_section_loader.load()
         self.assertQuerysetEqual(
             CurriculumGuideSection.objects.all(),
@@ -44,8 +45,9 @@ class CurriculumGuideSectionsLoaderTest(BaseTestWithDB):
             curriculum_guide,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         curriculum_guide_section_loader.load()
         self.assertQuerysetEqual(
             CurriculumGuideSection.objects.all(),
@@ -64,8 +66,9 @@ class CurriculumGuideSectionsLoaderTest(BaseTestWithDB):
             curriculum_guide,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         self.assertRaises(
             MissingRequiredFieldError,
             curriculum_guide_section_loader.load
@@ -80,8 +83,9 @@ class CurriculumGuideSectionsLoaderTest(BaseTestWithDB):
             curriculum_guide,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         self.assertRaises(
             MissingRequiredFieldError,
             curriculum_guide_section_loader.load
@@ -96,8 +100,9 @@ class CurriculumGuideSectionsLoaderTest(BaseTestWithDB):
             curriculum_guide,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         self.assertRaises(
             InvalidYAMLValueError,
             curriculum_guide_section_loader.load
@@ -112,8 +117,9 @@ class CurriculumGuideSectionsLoaderTest(BaseTestWithDB):
             curriculum_guide,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         self.assertRaises(
             ValidationError,
             curriculum_guide_section_loader.load
@@ -128,8 +134,9 @@ class CurriculumGuideSectionsLoaderTest(BaseTestWithDB):
             curriculum_guide,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         self.assertRaises(
             NoHeadingFoundInMarkdownFileError,
             curriculum_guide_section_loader.load
@@ -144,8 +151,9 @@ class CurriculumGuideSectionsLoaderTest(BaseTestWithDB):
             curriculum_guide,
             base_path=self.base_path,
             content_path=test_slug,
-            structure_filename="{}.yaml".format(test_slug),
+            structure_filename=f"{test_slug}.yaml",
         )
+
         self.assertRaises(
             InvalidYAMLValueError,
             curriculum_guide_section_loader.load

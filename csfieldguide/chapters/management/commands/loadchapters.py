@@ -50,29 +50,30 @@ class Command(BaseCommand):
                 ["chapters"],
                 "Application Structure"
             )
-        else:
-            for chapter_slug in chapters:
-                chapter_structure_file = "{}.yaml".format(chapter_slug)
+        for chapter_slug in chapters:
+            chapter_structure_file = f"{chapter_slug}.yaml"
 
-                chapter_number = chapters[chapter_slug].get("chapter-number", None)
-                if chapter_number is None:
-                    raise MissingRequiredFieldError(
-                        structure_file_path,
-                        ["chapter_number"],
-                        "Application Structure for Chapter {}".format(chapter_slug)
-                    )
-                if isinstance(chapter_number, int) is False:
-                    raise InvalidYAMLValueError(
-                        structure_file_path,
-                        "chapter-number - value '{}' is invalid".format(chapter_number),
-                        "chapter-number must be an integer value."
-                    )
-                factory.create_chapter_loader(
-                    base_path=base_path,
-                    content_path=chapter_slug,
-                    chapter_number=chapter_number,
-                    structure_filename=chapter_structure_file,
-                ).load()
+            chapter_number = chapters[chapter_slug].get("chapter-number", None)
+            if chapter_number is None:
+                raise MissingRequiredFieldError(
+                    structure_file_path,
+                    ["chapter_number"],
+                    f"Application Structure for Chapter {chapter_slug}",
+                )
 
-            base_loader.log("All chapters loaded!")
-            base_loader.log("")
+            if not isinstance(chapter_number, int):
+                raise InvalidYAMLValueError(
+                    structure_file_path,
+                    f"chapter-number - value '{chapter_number}' is invalid",
+                    "chapter-number must be an integer value.",
+                )
+
+            factory.create_chapter_loader(
+                base_path=base_path,
+                content_path=chapter_slug,
+                chapter_number=chapter_number,
+                structure_filename=chapter_structure_file,
+            ).load()
+
+        base_loader.log("All chapters loaded!")
+        base_loader.log("")

@@ -25,8 +25,8 @@ def render_interactive_link(context, interactive, *args, **kwargs):
             slug=interactive
         )
 
-    parameters = kwargs.get("parameters", None)
-    text = kwargs.get("text", None)
+    parameters = kwargs.get("parameters")
+    text = kwargs.get("text")
 
     # Trim '?' at start if present
     if isinstance(parameters, str) and parameters.startswith("?"):

@@ -25,7 +25,7 @@ class GlossaryTermsLoader(TranslatableModelLoader):
         for glossary_slug in sorted(glossary_slugs):
             term_translations = self.get_blank_translation_dictionary()
 
-            content_filename = "{}.md".format(glossary_slug)
+            content_filename = f"{glossary_slug}.md"
             content_translations = self.get_markdown_translations(content_filename)
 
             for language, content in content_translations.items():
@@ -39,10 +39,7 @@ class GlossaryTermsLoader(TranslatableModelLoader):
             self.mark_translation_availability(glossary_term, required_fields=["term", "definition"])
             glossary_term.save()
 
-            if created:
-                term = 'Created'
-            else:
-                term = 'Updated'
+            term = 'Created' if created else 'Updated'
             self.log(f'{term} glossary term: {glossary_term.__str__()}')
 
-        self.log("{} glossary terms loaded!\n".format(len(glossary_slugs)))
+        self.log(f"{len(glossary_slugs)} glossary terms loaded!\n")
