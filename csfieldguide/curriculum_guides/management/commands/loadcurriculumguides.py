@@ -42,29 +42,30 @@ class Command(BaseCommand):
                 ["curriculum_guides"],
                 "Application Structure"
             )
-        else:
-            for curriculum_guide_slug in curriculum_guides:
-                curriculum_guide_structure_file = "{}.yaml".format(curriculum_guide_slug)
+        for curriculum_guide_slug in curriculum_guides:
+            curriculum_guide_structure_file = f"{curriculum_guide_slug}.yaml"
 
-                curriculum_guide_number = curriculum_guides[curriculum_guide_slug].get("curriculum-guide-number", None)
-                if curriculum_guide_number is None:
-                    raise MissingRequiredFieldError(
-                        structure_file_path,
-                        ["curriculum_guide_number"],
-                        "Application Structure for Curriculum Guide {}".format(curriculum_guide_slug)
-                    )
-                if isinstance(curriculum_guide_number, int) is False:
-                    raise InvalidYAMLValueError(
-                        structure_file_path,
-                        "curriculum-guide-number - value '{}' is invalid".format(curriculum_guide_number),
-                        "curriculum-guide-number must be an integer value."
-                    )
-                factory.create_curriculum_guide_loader(
-                    base_path=base_path,
-                    content_path=curriculum_guide_slug,
-                    curriculum_guide_number=curriculum_guide_number,
-                    structure_filename=curriculum_guide_structure_file,
-                ).load()
+            curriculum_guide_number = curriculum_guides[curriculum_guide_slug].get("curriculum-guide-number", None)
+            if curriculum_guide_number is None:
+                raise MissingRequiredFieldError(
+                    structure_file_path,
+                    ["curriculum_guide_number"],
+                    f"Application Structure for Curriculum Guide {curriculum_guide_slug}",
+                )
 
-            base_loader.log("All curriculum guides loaded!")
-            base_loader.log("")
+            if not isinstance(curriculum_guide_number, int):
+                raise InvalidYAMLValueError(
+                    structure_file_path,
+                    f"curriculum-guide-number - value '{curriculum_guide_number}' is invalid",
+                    "curriculum-guide-number must be an integer value.",
+                )
+
+            factory.create_curriculum_guide_loader(
+                base_path=base_path,
+                content_path=curriculum_guide_slug,
+                curriculum_guide_number=curriculum_guide_number,
+                structure_filename=curriculum_guide_structure_file,
+            ).load()
+
+        base_loader.log("All curriculum guides loaded!")
+        base_loader.log("")

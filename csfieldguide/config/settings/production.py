@@ -5,6 +5,7 @@ Django settings for production environment.
 - Load secret values from files.
 """
 
+
 from .base import *  # noqa: F403
 
 
@@ -27,11 +28,7 @@ with open(env("DJANGO_SECRET_KEY_FILE")) as file:  # noqa: F405
 # URL Configuration
 # ------------------------------------------------------------------------------
 # TODO: Setup for different environments
-if PRODUCTION_ENVIRONMENT:  # noqa: F405
-    PREPEND_WWW = True
-else:
-    PREPEND_WWW = False
-
+PREPEND_WWW = PRODUCTION_ENVIRONMENT
 # DATABASE CONFIGURATION
 # ----------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases

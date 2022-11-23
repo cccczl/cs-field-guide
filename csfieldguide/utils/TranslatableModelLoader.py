@@ -80,19 +80,21 @@ class TranslatableModelLoader(BaseLoader):
                         raise MissingRequiredFieldError(
                             translations_filename,
                             [required_field],
-                            "model ({})".format(model_slug)
+                            f"model ({model_slug})",
                         )
+
                 for field, value in model_fields.items():
                     if not isinstance(value, str):
                         raise InvalidYAMLValueError(
                             translations_filename,
-                            "{}->{}".format(model_slug, field),
-                            "String"
+                            f"{model_slug}->{field}",
+                            "String",
                         )
+
                     if field_map:
                         field = field_map.get(field, field)
                     values_dict[field] = value
-                translations.setdefault(model_slug, dict())[language] = values_dict
+                translations.setdefault(model_slug, {})[language] = values_dict
         return translations
 
     def get_markdown_translations(self, filename, required=True, **kwargs):
@@ -161,13 +163,11 @@ class TranslatableModelLoader(BaseLoader):
         for language in get_available_languages():
             with translation.override(language):
                 with fallbacks(False):
-                    if all(
-                        [getattr(model, field) for field in required_fields]
-                    ):
+                    if all(getattr(model, field) for field in required_fields):
                         available_languages.append(language)
         model.languages = available_languages
 
     @staticmethod
     def get_blank_translation_dictionary():
         """Return a dictionary of blank dictionaries, keyed by all available language."""
-        return {language: dict() for language in get_available_languages()}
+        return {language: {} for language in get_available_languages()}

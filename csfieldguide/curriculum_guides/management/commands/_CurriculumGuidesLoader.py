@@ -43,7 +43,7 @@ class CurriculumGuidesLoader(TranslatableModelLoader):
 
         curriculum_guide_translations = self.get_blank_translation_dictionary()
 
-        introduction_filename = "{}.md".format(self.curriculum_guide_slug)
+        introduction_filename = f"{self.curriculum_guide_slug}.md"
         introduction_translations = self.get_markdown_translations(introduction_filename)
         for language, content in introduction_translations.items():
             curriculum_guide_translations[language]["introduction"] = content.html_string
@@ -61,10 +61,7 @@ class CurriculumGuidesLoader(TranslatableModelLoader):
         self.mark_translation_availability(curriculum_guide, required_fields=["name", "introduction"])
         curriculum_guide.save()
 
-        if created:
-            term = 'Created'
-        else:
-            term = 'Updated'
+        term = 'Created' if created else 'Updated'
         self.log(f'{term} curriculum guide: {curriculum_guide.name}')
 
         # Load curriculum guide sections

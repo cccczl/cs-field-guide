@@ -62,8 +62,8 @@ class GlossaryTermsLoaderTest(BaseTestWithDB):
         translated_term = GlossaryTerm.objects.get(slug="glossary-term-1")
         untranslated_term = GlossaryTerm.objects.get(slug="glossary-term-2")
 
-        self.assertSetEqual(set(["en", "de"]), set(translated_term.languages))
-        self.assertSetEqual(set(["en"]), set(untranslated_term.languages))
+        self.assertSetEqual({"en", "de"}, set(translated_term.languages))
+        self.assertSetEqual({"en"}, set(untranslated_term.languages))
 
         self.assertEqual("Term 1 English", translated_term.term)
         self.assertIn("English definition.", translated_term.definition)

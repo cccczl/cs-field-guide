@@ -87,7 +87,7 @@ def thumbnail_json(request, **kwargs):
     Returns:
         JSON response is sent containing data for thumbnails.
     """
-    data = list()
+    data = []
 
     if request.GET.get("all_languages", False):
         languages = settings.DEFAULT_LANGUAGES

@@ -10,7 +10,7 @@ def get_thumbnail_filename(interactive_slug):
     Args:
         interactive_slug (str): Slug of interactive to create thumbnail for.
     """
-    return "{}.png".format(interactive_slug)
+    return f"{interactive_slug}.png"
 
 
 def get_thumbnail_base():
@@ -22,15 +22,9 @@ def get_thumbnail_base():
     Returns:
         String of thumbnail base.
     """
-    interactive_thumbnail_base = join(
-        "build",
-        "img",
-        "interactives",
-        "thumbnails",
-        get_language(),
-        ""
+    return join(
+        "build", "img", "interactives", "thumbnails", get_language(), ""
     )
-    return interactive_thumbnail_base
 
 
 def get_thumbnail_static_path_for_interactive(interactive):
@@ -42,8 +36,4 @@ def get_thumbnail_static_path_for_interactive(interactive):
     Returns:
         String of static path to thumbnail.
     """
-    thumbnail = join(
-        get_thumbnail_base(),
-        get_thumbnail_filename(interactive.slug)
-    )
-    return thumbnail
+    return join(get_thumbnail_base(), get_thumbnail_filename(interactive.slug))

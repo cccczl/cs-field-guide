@@ -30,12 +30,11 @@ def render_interactive_html(interactive_slug, mode, request=None):
         Interactive,
         slug=interactive_slug
     )
-    if mode in ALLOWED_MODES:
-        mode_template = join(settings.INTERACTIVES_BASE_TEMPLATES_PATH, "{}.html".format(mode))
-        context = {
-            "interactive": interactive,
-            "interactive_mode_template": mode_template,
-        }
-    else:
+    if mode not in ALLOWED_MODES:
         raise Http404("Interactive mode must be one of ('{}')".format("', '".join(ALLOWED_MODES)))
+    mode_template = join(settings.INTERACTIVES_BASE_TEMPLATES_PATH, f"{mode}.html")
+    context = {
+        "interactive": interactive,
+        "interactive_mode_template": mode_template,
+    }
     return render_to_string(interactive.template, context, request=request)

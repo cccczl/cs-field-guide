@@ -24,9 +24,8 @@ def read_static_file(filepath):
     """
     filepath = settings.STATIC_ROOT + filepath
 
-    if os.path.isfile(filepath):
-        with open(filepath) as file_obj:
-            contents = mark_safe(file_obj.read())
-    else:
+    if not os.path.isfile(filepath):
         raise FileNotFoundError(f'No static file found: {filepath}')
+    with open(filepath) as file_obj:
+        contents = mark_safe(file_obj.read())
     return contents

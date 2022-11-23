@@ -39,13 +39,14 @@ class CurriculumGuidesTestDataGenerator:
             CurriculumGuide object.
         """
         if not introduction:
-            introduction = "<p>Introduction for curriculum guide {}</p>".format(number)
+            introduction = f"<p>Introduction for curriculum guide {number}</p>"
         curriculum_guide = CurriculumGuide(
-            slug="curriculum_guide-{}".format(number),
-            name="CurriculumGuide {}".format(number),
+            slug=f"curriculum_guide-{number}",
+            name=f"CurriculumGuide {number}",
             number=number,
             introduction=introduction,
         )
+
         curriculum_guide.save()
         return curriculum_guide
 
@@ -59,11 +60,12 @@ class CurriculumGuidesTestDataGenerator:
             CurriculumGuideSection object.
         """
         curriculum_guide_section = CurriculumGuideSection(
-            slug="section-{}".format(number),
-            name="Section {}".format(number),
+            slug=f"section-{number}",
+            name=f"Section {number}",
             number=number,
-            content="<p>Content for section {}.</p>".format(number),
-            curriculum_guide=curriculum_guide
+            content=f"<p>Content for section {number}.</p>",
+            curriculum_guide=curriculum_guide,
         )
+
         curriculum_guide_section.save()
         return curriculum_guide_section

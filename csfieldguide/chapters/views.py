@@ -130,20 +130,18 @@ def glossary_json(request, **kwargs):
     Returns:
         JSON response is sent containing data for the requested term.
     """
-    # If term parameter, then return JSON
-    if "term" in request.GET:
-        glossary_slug = request.GET.get("term")
-        glossary_item = get_object_or_404(
-            GlossaryTerm,
-            slug=glossary_slug
-        )
-        is_translated = get_language() in glossary_item.languages
-        data = {
-            "slug": glossary_slug,
-            "term": glossary_item.term,
-            "definition": render_html_with_load_tags(glossary_item.definition),
-            "translated": is_translated
-        }
-        return JsonResponse(data)
-    else:
+    if "term" not in request.GET:
         raise Http404("Term parameter not specified.")
+    glossary_slug = request.GET.get("term")
+    glossary_item = get_object_or_404(
+        GlossaryTerm,
+        slug=glossary_slug
+    )
+    is_translated = get_language() in glossary_item.languages
+    data = {
+        "slug": glossary_slug,
+        "term": glossary_item.term,
+        "definition": render_html_with_load_tags(glossary_item.definition),
+        "translated": is_translated
+    }
+    return JsonResponse(data)

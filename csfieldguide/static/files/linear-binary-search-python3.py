@@ -71,13 +71,10 @@ def linear_search_count(list_of_keys, search_key):
         return 0
 
     key_comparisons_made = 0
-    search_key_index = 0
-    while search_key_index < length_of_list:
+    for search_key_index in range(length_of_list):
         key_comparisons_made += 1
         if list_of_keys[search_key_index] == search_key:
             return key_comparisons_made
-        search_key_index += 1
-
     return key_comparisons_made
 
 
@@ -129,7 +126,7 @@ def test_linear_search(n):
 # For thorough results, experiments should be run for a larger range of values
 # and experiments should be repeated multiple times
 for number_of_keys in NUMBER_OF_KEYS:
-    for repeat_of_experiment in range(NUMBER_OF_REPEATED_EXPERIMENTS):
+    for _ in range(NUMBER_OF_REPEATED_EXPERIMENTS):
         test_linear_search(number_of_keys)
-    for repeat_of_experiment in range(NUMBER_OF_REPEATED_EXPERIMENTS):
+    for _ in range(NUMBER_OF_REPEATED_EXPERIMENTS):
         test_binary_search(number_of_keys)

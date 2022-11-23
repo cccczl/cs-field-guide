@@ -40,9 +40,7 @@ class SearchView(generic.TemplateView):
         # Get request query parmaters
         query_text = self.request.GET.get('q')
         selected_models = self.request.GET.getlist('models')
-        get_request = bool(self.request.GET)
-
-        if get_request:
+        if get_request := bool(self.request.GET):
             context['search'] = get_request
 
             results = SearchItem.objects.filter(

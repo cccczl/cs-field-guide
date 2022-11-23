@@ -51,18 +51,19 @@ class ChapterSectionsLoader(TranslatableModelLoader):
                     ["section-number"],
                     "ChapterSection"
                 )
-            if isinstance(section_number, int) is False:
+            if not isinstance(section_number, int):
                 raise InvalidYAMLValueError(
                     self.structure_file_path,
-                    "section-number - value '{}' is invalid".format(section_number),
-                    "section-number must be an integer value."
+                    f"section-number - value '{section_number}' is invalid",
+                    "section-number must be an integer value.",
                 )
+
 
             section_numbers.append(section_number)
 
             chapter_section_translations = self.get_blank_translation_dictionary()
 
-            content_filename = "{}.md".format(section_slug)
+            content_filename = f"{section_slug}.md"
             content_translations = self.get_markdown_translations(content_filename)
             for language, content in content_translations.items():
                 chapter_section_translations[language]["content"] = content.html_string
@@ -81,10 +82,7 @@ class ChapterSectionsLoader(TranslatableModelLoader):
 
             chapter_section.save()
 
-            if created:
-                term = 'Created'
-            else:
-                term = 'Updated'
+            term = 'Created' if created else 'Updated'
             self.log(f'{term} chapter section: {chapter_section.name}', 1)
 
             check_interactives(
@@ -106,6 +104,6 @@ class ChapterSectionsLoader(TranslatableModelLoader):
             if section_number != counter:
                 raise InvalidYAMLValueError(
                     self.structure_file_path,
-                    "section-number - value '{}' is invalid".format(section_number),
-                    "section-numbers must be in sequential order. The next expected number was '{}'.".format(counter)
+                    f"section-number - value '{section_number}' is invalid",
+                    f"section-numbers must be in sequential order. The next expected number was '{counter}'.",
                 )

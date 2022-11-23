@@ -36,16 +36,13 @@ class RepositoryTests(SimpleTestCase):
             self.assertIn(
                 DOCKERFILE_ENTRY.format(directory),
                 dockerfile_contents,
-                msg="'{}' could not be found referenced in Dockerfile".format(
-                    filepath,
-                )
+                msg=f"'{filepath}' could not be found referenced in Dockerfile",
             )
+
 
             # Check in docker-compose.local.yaml
             self.assertIn(
                 DOCKER_COMPOSE_ENTRY.format(directory),
                 node_volumes,
-                msg="'{}' could not be found referenced in Dockerfile".format(
-                    filepath,
-                )
+                msg=f"'{filepath}' could not be found referenced in Dockerfile",
             )

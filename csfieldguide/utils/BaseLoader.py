@@ -146,9 +146,8 @@ class BaseLoader():
         except VertoError as e:
             raise VertoConversionError(md_file_path, e) from e
 
-        if heading_required:
-            if result.title is None:
-                raise NoHeadingFoundInMarkdownFileError(md_file_path)
+        if heading_required and result.title is None:
+            raise NoHeadingFoundInMarkdownFileError(md_file_path)
 
         if len(result.html_string) == 0:
             raise EmptyMarkdownFileError(md_file_path)
@@ -196,7 +195,7 @@ class BaseLoader():
         if yaml_contents is None:
             raise EmptyYAMLFileError(yaml_file_path)
 
-        if isinstance(yaml_contents, dict) is False:
+        if not isinstance(yaml_contents, dict):
             raise InvalidYAMLFileError(yaml_file_path)
 
         return yaml_contents
@@ -207,9 +206,9 @@ class BaseLoader():
         Returns:
             templates: dictionary of html templates
         """
-        templates = dict()
+        templates = {}
         template_path = settings.CUSTOM_VERTO_TEMPLATES
-        templates.update(self.read_template_files(template_path))
+        templates |= self.read_template_files(template_path)
         if hasattr(self, "extra_converter_templates_directory"):
             directory = self.extra_converter_templates_directory
             template_path = os.path.join(template_path, directory)
@@ -222,10 +221,9 @@ class BaseLoader():
         Returns:
             templates: dictionary of html templates
         """
-        templates = dict()
+        templates = {}
         for file in listdir(template_path):
-            template_file = re.search(r"(.*?).html$", file)
-            if template_file:
+            if template_file := re.search(r"(.*?).html$", file):
                 template_name = template_file.groups()[0]
                 templates[template_name] = open(os.path.join(template_path, file)).read()
         return templates

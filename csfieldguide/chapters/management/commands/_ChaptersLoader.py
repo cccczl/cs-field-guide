@@ -45,7 +45,7 @@ class ChaptersLoader(TranslatableModelLoader):
 
         chapter_translations = self.get_blank_translation_dictionary()
 
-        introduction_filename = "{}.md".format(self.chapter_slug)
+        introduction_filename = f"{self.chapter_slug}.md"
         introduction_translations = self.get_markdown_translations(introduction_filename)
         for language, content in introduction_translations.items():
             chapter_translations[language]["introduction"] = content.html_string
@@ -81,10 +81,7 @@ class ChaptersLoader(TranslatableModelLoader):
         self.mark_translation_availability(chapter, required_fields=["name", "introduction"])
         chapter.save()
 
-        if created:
-            term = 'Created'
-        else:
-            term = 'Updated'
+        term = 'Created' if created else 'Updated'
         self.log(f'{term} chapter: {chapter.name}')
 
         check_interactives(

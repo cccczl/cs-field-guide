@@ -62,7 +62,4 @@ class BaseLoaderTest(SimpleTestCase):
         test_folder = os.path.join(TEST_ASSET_PATH, "valid-templates-zero", "")
         with self.settings(CUSTOM_VERTO_TEMPLATES=test_folder):
             loader = BareBaseLoader()
-            self.assertEqual(
-                loader.load_template_files(),
-                dict()
-            )
+            self.assertEqual(loader.load_template_files(), {})

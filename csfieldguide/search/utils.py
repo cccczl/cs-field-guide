@@ -18,8 +18,7 @@ def concat_field_values(*args):
     field_names = []
     for queryset in args:
         for instance in queryset:
-            for field in instance:
-                field_names.append(str(field))
+            field_names.extend(str(field) for field in instance)
     return ' '.join(field_names)
 
 
@@ -33,10 +32,10 @@ def get_search_model_types(search_model_types_list):
     Return:
         Dictionary of search model types, keyed by search model ID.
     """
-    model_types = dict()
-    for model_data in search_model_types_list:
-        model_types[get_search_model_id(model_data['class'])] = model_data
-    return model_types
+    return {
+        get_search_model_id(model_data['class']): model_data
+        for model_data in search_model_types_list
+    }
 
 
 def get_search_model_id(model):
@@ -62,16 +61,14 @@ def get_model_filter_options(search_model_types):
     Return:
         List of dictionaries of model options.
     """
-    options = []
-    for (model_id, model_data) in search_model_types.items():
-        options.append(
-            {
-                'name': model_data['class']._meta.verbose_name.capitalize(),
-                'value': model_id,
-                'selected': False,
-            }
-        )
-    return options
+    return [
+        {
+            'name': model_data['class']._meta.verbose_name.capitalize(),
+            'value': model_id,
+            'selected': False,
+        }
+        for model_id, model_data in search_model_types.items()
+    ]
 
 
 def updated_model_filter_options(model_options, selected_options):

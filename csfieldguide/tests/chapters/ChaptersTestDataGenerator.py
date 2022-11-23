@@ -40,13 +40,14 @@ class ChaptersTestDataGenerator:
             Chapter object.
         """
         if not introduction:
-            introduction = "<p>Introduction for chapter {}</p>".format(number)
+            introduction = f"<p>Introduction for chapter {number}</p>"
         chapter = Chapter(
-            slug="chapter-{}".format(number),
-            name="Chapter {}".format(number),
+            slug=f"chapter-{number}",
+            name=f"Chapter {number}",
             number=number,
             introduction=introduction,
         )
+
         chapter.save()
         return chapter
 
@@ -60,12 +61,13 @@ class ChaptersTestDataGenerator:
             ChapterSection object.
         """
         chapter_section = ChapterSection(
-            slug="section-{}".format(number),
-            name="Section {}".format(number),
+            slug=f"section-{number}",
+            name=f"Section {number}",
             number=number,
-            content="<p>Content for section {}.</p>".format(number),
-            chapter=chapter
+            content=f"<p>Content for section {number}.</p>",
+            chapter=chapter,
         )
+
         chapter_section.save()
         return chapter_section
 
@@ -79,9 +81,10 @@ class ChaptersTestDataGenerator:
             GlossaryTerm object.
         """
         glossary_term = GlossaryTerm(
-            slug="glossary-term-{}".format(number),
-            term="Glossary Term {}".format(number),
-            definition="<p>Definition for glossary term {}.</p>".format(number),
+            slug=f"glossary-term-{number}",
+            term=f"Glossary Term {number}",
+            definition=f"<p>Definition for glossary term {number}.</p>",
         )
+
         glossary_term.save()
         return glossary_term

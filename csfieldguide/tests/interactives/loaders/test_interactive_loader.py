@@ -65,7 +65,7 @@ class InteractivesLoaderTest(BaseTestWithDB):
                 "interactives/template-fr.html",
                 interactive.template
             )
-        self.assertSetEqual(set(["en", "de"]), set(interactive.languages))
+        self.assertSetEqual({"en", "de"}, set(interactive.languages))
 
     def test_interactives_interactives_missing_name(self):
         interactive_loader = InteractivesLoader(
